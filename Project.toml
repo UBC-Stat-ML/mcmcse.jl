@@ -1,0 +1,8 @@
+name = "mcmcse"
+uuid = "d6572e88-3802-4d56-8f88-2c38f4602907"
+authors = ["Miguel Biron-Lattes <miguelbl9@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
