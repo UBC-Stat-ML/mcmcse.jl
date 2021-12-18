@@ -1,6 +1,5 @@
 using mcmcse
 using Test
+using RCall
 
-@testset "mcmcse.jl" begin
-    # Write your tests here.
-end
+include("test_batch_size.jl")
