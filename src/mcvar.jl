@@ -74,9 +74,9 @@ function mcvar(
     return sig_mat
 end
 
-# handle vectors as 1-column matrices
+# handle vectors as 1-column matrices. returns scalar
 function mcvar(x::TV;kwargs...) where {F <: AbstractFloat, TV <: AbstractVector{F}}
-    mcvar(reshape(x,(length(x), 1));kwargs...)
+    mcvar(reshape(x,(length(x), 1));kwargs...)[1]
 end
 
 # convert non-float reals to Float64
