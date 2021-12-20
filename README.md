@@ -4,7 +4,7 @@ This is a pure-Julia adaptation of the R package `mcmcse`, which you can find on
 
 ## Installation
 
-From the Julia REPL, enter package mode by typing `]`, then type
+From the Julia REPL, enter package mode by typing `]`, then write
 ```julia
 (@v1.7) pkg> add https://github.com/miguelbiron/mcmcse.jl.git
 ``` 
@@ -13,7 +13,7 @@ From the Julia REPL, enter package mode by typing `]`, then type
 
 Currently `mcmcse.jl` contains only the core funcionalities in `mcmcse`
 
-- `mcvar` implements many of the `mcse`-like functions in `mcmcse` via multiple-dispatch 
+- `mcvar` implements some of the `mcse`-like functions in `mcmcse` via multiple-dispatch 
 - `batch_size` implements `mcmcse::batchSize()` for automatic batch size determination
 - `ess` implements `mcmcse::ess()` for estimating the effective sample size 
 
