@@ -1,8 +1,11 @@
 module mcmcse
 
-using StatsBase, LinearAlgebra
+using StatsBase, Statistics, LinearAlgebra
 
 export batch_size
-include("batch_size.jl");
+include("batch_size.jl")
+
+export mcse
+include("mcse.jl")
 
 end
