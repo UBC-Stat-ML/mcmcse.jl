@@ -14,8 +14,8 @@ From the Julia REPL, enter package mode by typing `]`, then type
 Currently `mcmcse.jl` contains only the core funcionalities in `mcmcse`
 
 - `mcvar` implements many of the `mcse`-like functions in `mcmcse` via multiple-dispatch 
-- `batch_size` implements `mcmcse::batchSize()`
-- `ess` implements `mcmcse::ess()`
+- `batch_size` implements `mcmcse::batchSize()` for automatic batch size determination
+- `ess` implements `mcmcse::ess()` for estimating the effective sample size 
 
 
 ## References
