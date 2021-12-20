@@ -5,7 +5,10 @@ using StatsBase, Statistics, LinearAlgebra
 export batch_size
 include("batch_size.jl")
 
-export mcse
-include("mcse.jl")
+export mcvar
+include("mcvar.jl")
+
+export ess
+include("ess.jl")
 
 end

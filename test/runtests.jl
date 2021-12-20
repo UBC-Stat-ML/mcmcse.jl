@@ -14,4 +14,5 @@ function Gibbs_sampler(mu1, mu2, a, b, rho, init, n)
 end
 
 include("test_batch_size.jl")
-include("test_mcse.jl")
+include("test_mcvar.jl")
+include("test_ess.jl")

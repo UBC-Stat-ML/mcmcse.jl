@@ -6,7 +6,7 @@
 #     MCMC. R package version 1.5-0. Riverside, CA, and Kanpur, India.
 ###############################################################################
 
-function mcse(
+function mcvar(
     x::TM;
     method::String      = "bm",
     r::Real             = 3,
@@ -17,7 +17,7 @@ function mcse(
     # parse method
     if method == "lug"
         method = "bm"
-        r = 3
+        r      = 3
     elseif method != "bm"
         throw("Method $method unknown or not yet implemented")
     end
@@ -75,13 +75,13 @@ function mcse(
 end
 
 # handle vectors as 1-column matrices
-function mcse(x::TV;kwargs...) where {F <: AbstractFloat, TV <: AbstractVector{F}}
-    mcse(reshape(x,(length(x), 1));kwargs...)
+function mcvar(x::TV;kwargs...) where {F <: AbstractFloat, TV <: AbstractVector{F}}
+    mcvar(reshape(x,(length(x), 1));kwargs...)
 end
 
 # convert non-float reals to Float64
-function mcse(x::AbstractVecOrMat{<:Real};kwargs...)
-    mcse(convert(Array{Float64},x);kwargs...)
+function mcvar(x::AbstractVecOrMat{<:Real};kwargs...)
+    mcvar(convert(Array{Float64},x);kwargs...)
 end
 
 ###############################################################################
