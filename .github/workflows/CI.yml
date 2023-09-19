@@ -31,7 +31,7 @@ jobs:
       - run: echo "LD_LIBRARY_PATH=$(R RHOME)/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
         if: matrix.os == 'ubuntu-latest'
       - name: Install fftw
-        run: sudo apt-get install -y fftw-dev
+        run: sudo apt-get install -y fftw3-dev
         if: matrix.os == 'ubuntu-latest'
       - name: install-mcmcse   
         run: Rscript -e "install.packages('mcmcse', repos='https://cloud.r-project.org')"
