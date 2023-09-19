@@ -96,7 +96,7 @@ function bm(M::TM, b::Int, means::Nothing) where {F <: AbstractFloat, TM <: Abst
     bm(M, b, y)
 end
 
-function bm(M::TM, b::Int, means::Y) where {F <: AbstractFloat, TM <: AbstractMatrix{F}, Y <: AbstractVector}
+function bm(M::TM, b::Int, means) where {F <: AbstractFloat, TM <: AbstractMatrix{F}}
     n = size(M, 1)
     a = floor(Int, n/b) # a batches of size b
     cbms = [sum(M[(1 + b*i):(b*(i + 1)), :], dims=1)/b .- means for i in 0:(a-1)] # centered batch means
