@@ -31,6 +31,6 @@ jobs:
       - run: echo "LD_LIBRARY_PATH=$(R RHOME)/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
         if: matrix.os == 'ubuntu-latest'
       - name: install-mcmcse   
-        run: Rscript -e 'install.packages("mcmcse", repos="https://cloud.r-project.org")'
+        run: Rscript -e "install.packages('mcmcse', repos='https://cloud.r-project.org')"
       - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@v1
