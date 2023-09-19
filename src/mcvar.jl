@@ -11,7 +11,8 @@ function mcvar(
     method::String      = "bm",
     r::Real             = 3,
     b::Int              = -1,
-    size_method::String = "optimal"
+    size_method::String = "optimal", 
+    means               = nothing
 ) where {F <: AbstractFloat, TM <: AbstractMatrix{F}}
     
     # parse method
@@ -60,9 +61,9 @@ function mcvar(
     if b == 1
         sig_mat = cov(x)
     else
-        sig_mat = bm(x, b)
+        sig_mat = bm(x, b, means)
         if r > 1
-            sig_mat = (1/(1-c))*sig_mat - (c/(1-c))*bm(x, floor(Int, b/r))
+            sig_mat = (1/(1-c))*sig_mat - (c/(1-c))*bm(x, floor(Int, b/r), means)
         end
     end
 
@@ -89,14 +90,16 @@ end
 ###############################################################################
 
 # batch means
-function bm(M::TM, b::Int) where {F <: AbstractFloat, TM <: AbstractMatrix{F}}
+function bm(M::TM, b::Int, means::Nothing) where {F <: AbstractFloat, TM <: AbstractMatrix{F}}
     n = size(M, 1)
-    a = floor(Int, n/b)    # a batches of size b
-    y = sum(M, dims=1)/n   # compute means using all the data
-    
-    # compute centered batch means
-    cbms = [sum(M[(1 + b*i):(b*(i + 1)), :], dims=1)/b .- y for i in 0:(a-1)]
-    B    = reduce(vcat, cbms) # convert to matrix
-    (b/(a-1)) * (B' * B)   # return estimate of variance
+    y = sum(M, dims=1)/n # compute means using all the data
+    bm(M, b, y)
 end
 
+function bm(M::TM, b::Int, means) where {F <: AbstractFloat, TM <: AbstractMatrix{F}}
+    n = size(M, 1)
+    a = floor(Int, n/b) # a batches of size b
+    cbms = [sum(M[(1 + b*i):(b*(i + 1)), :], dims=1)/b .- means for i in 0:(a-1)] # centered batch means
+    B    = reduce(vcat, cbms) # convert to matrix
+    (b/(a-1)) * (B' * B) # return estimate of variance
+end
