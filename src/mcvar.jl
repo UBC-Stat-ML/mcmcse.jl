@@ -12,7 +12,8 @@ function mcvar(
     r::Real             = 3,
     b::Int              = -1,
     size_method::String = "optimal", 
-    means               = nothing
+    means               = nothing,
+    adjust::Bool        = true
 ) where {F <: AbstractFloat, TM <: AbstractMatrix{F}}
     
     # parse method
@@ -53,23 +54,34 @@ function mcvar(
     a = floor(Int, n/b) # number of batches
     b == 1 && r != 1 && (r = 1)
     if b < 2r
-        @info "estimated batch size is low, lugsail not required. setting r = 1"
+        @info """
+        Estimated batch size is low, lugsail not required. Setting r = 1.
+        Further messages of this type will be suppresed.
+        """ maxlog=1
         r = 1
     end
 
     # estimate variance
     if b == 1
-        sig_mat = cov(x)
+        init_mat = cov(x)
+        sig_mat  = copy(init_mat)
     else
-        sig_mat = bm(x, b, means)
+        init_mat = bm(x, b, means)
+        sig_mat  = copy(init_mat)
         if r > 1
-            sig_mat = (1/(1-c))*sig_mat - (c/(1-c))*bm(x, floor(Int, b/r), means)
+            sig_mat = (1/(1-c))*init_mat - (c/(1-c))*bm(x, floor(Int, b/r), means)
         end
     end
 
     # check if not posdef
     if !isposdef(sig_mat)
-        @warn "Estimated matrix not positive definite. The chain might be highly correlated or very high dimensional. Consider increasing the sample size."
+        @warn """
+        Estimated matrix not positive definite. The chain might be highly 
+        correlated or very high dimensional. Consider increasing the sample size.
+        """
+        if adjust
+            sig_mat = init_mat
+        end
     end
 
     return sig_mat
@@ -90,9 +102,8 @@ end
 ###############################################################################
 
 # batch means
-function bm(M::TM, b::Int, means::Nothing) where {F <: AbstractFloat, TM <: AbstractMatrix{F}}
-    n = size(M, 1)
-    y = sum(M, dims=1)/n # compute means using all the data
+function bm(M::TM, b::Int, ::Nothing) where {F <: AbstractFloat, TM <: AbstractMatrix{F}}
+    y = mean(M, dims=1) # compute means using all the data
     bm(M, b, y)
 end
 
