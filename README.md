@@ -6,7 +6,7 @@ This is a pure-Julia adaptation of the R package `mcmcse`, which you can find on
 
 From the Julia REPL, enter package mode by typing `]`, then write
 ```julia
-(@v1.7) pkg> add https://github.com/UBC-Stat-ML/mcmcse.jl.git
+add https://github.com/UBC-Stat-ML/mcmcse.jl.git
 ``` 
 
 ## Details
